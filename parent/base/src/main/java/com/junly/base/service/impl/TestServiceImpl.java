@@ -2,6 +2,8 @@ package com.junly.base.service.impl;
 
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,8 @@ import com.junly.base.service.TestService;
 
 @Service
 public class TestServiceImpl implements TestService {
+	
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	QueryStudentInfoMapper studentMapper;
@@ -20,10 +24,10 @@ public class TestServiceImpl implements TestService {
 	
 	@Override
 	public Map<String, Object> queryStudentInfo(String id) {
-		System.out.println("user slaver database print school info :");
-		System.out.println(schoolMapper.getSchoolName(id));
-		System.out.println(studentMapper.queryStudentInfo(id));
-		
+		Map<String, Object> schoolName = schoolMapper.getSchoolName(id);
+		Map<String, Object> queryStudentInfo = studentMapper.queryStudentInfo(id);
+		logger.info(schoolName == null?"":schoolName.toString());
+		logger.info(queryStudentInfo == null?"":queryStudentInfo.toString());
 		return studentMapper.queryStudentInfo(id);
 	}
 

@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: test
+    active: dev
 ---
 server: 
   #应用都端口号
@@ -26,6 +26,10 @@ spring:
     initialSize: 6
     minIdle: 20
     maxActive: 50
+    
+#引入打印日志输出配置采用了backlog日志记录的方式
+logging: 
+  config: classpath:logback-spring.xml
       
 #注册到eureka服务上
 eureka:
@@ -62,6 +66,10 @@ spring:
     minIdle: 20
     maxActive: 50
       
+#引入打印日志输出配置采用了backlog日志记录的方式
+logging: 
+  config: classpath:logback-spring.xml
+  
 #注册到eureka服务上
 eureka:
   client:
