@@ -2,15 +2,26 @@ server:
   #应用都端口号
   port: 8081
 spring:
-  #服务都名称
+  #服务器名称
   application.name: base
   datasource:
-    #type: com.alibaba.druid.pool.DruidDataSource
-    driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/springcloud
-    username: root
-    #由于数据库没有设置密码，所以不需要密码
-    #password: 123456
+  #第一个数据库的配置
+    master:  
+      driverClassName: com.mysql.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3306/springcloud
+      username: root
+      #由于数据库没有设置密码，所以不需要密码
+      #password: 123456
+   #第二个数据库的配置
+    slaver: 
+      driverClassName: com.mysql.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3306/springcloudslave
+      username: root
+      #password: 123456
+    initialSize: 6
+    minIdle: 20
+    maxActive: 50
+      
 #注册到eureka服务上
 eureka:
   client:
