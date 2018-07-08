@@ -1,0 +1,51 @@
+spring:
+  profiles:
+    active: dev
+---
+server: 
+  #应用都端口号
+  port: 8090
+spring:
+  profiles: dev
+  #服务器名称
+  application.name: front
+    
+feignClient: 
+  name: 
+    base: base
+
+base: 
+  Ribben:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.WeightedResponseTimeRule
+    
+#引入打印日志输出配置采用了backlog日志记录的方式
+logging: 
+  config: classpath:logback-spring.xml
+      
+#注册到eureka服务上
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  
+---
+server: 
+  #应用都端口号
+  port: 8091
+spring:
+  profiles: test
+  #服务器名称
+  application.name: front
+
+      
+#引入打印日志输出配置采用了backlog日志记录的方式
+logging: 
+  config: classpath:logback-spring.xml
+  
+#注册到eureka服务上
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+      
+      

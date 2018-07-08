@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 从高到地低 OFF 、 FATAL 、 ERROR 、 WARN 、 INFO 、 DEBUG 、 TRACE 、 ALL -->  
+<!-- 日志输出规则  根据当前ROOT 级别，日志输出时，级别高于root默认的级别时  会输出 -->  
+<!-- 以下  每个配置的 filter 是过滤掉输出文件里面，会出现高级别文件，依然出现低级别的日志信息，
+通过filter 过滤只记录本级别的日志--> 
+<!-- 对日志在实际应用的理解： 在生产日志中如果只需要看到WARN及以上的日志，则日志级别设置成warn ；
+对于uat测试服务器（预发布环境)设置成info级别，便于查看问题原因
+对于sit测试服务器日志建议设置成debug级别的，强烈建议打印定时任务日志时，采用debug日志，以免uat或者生产服务器日志爆满 ；
+本地日志设置成控制台输出便于直观的查询问题原因-->
+<configuration>
+    <!-- 文件输出格式 -->
+    <property name="PATTERN"
+        value="%-12(%d{yyyy-MM-dd HH:mm:ss.SSS}) |-%-5level [%thread] %c [%L] -| %msg%n" />
+    <!-- 文件路径 -->
+    <property name="FILE_PATH" value="E:/workspace-sts-git/baselog/base.log" />
+
+    <!-- 开发环境 -->
+    <springProfile name="dev">
+    	<!-- 设置成控制台打印策略 ch.qos.logback.core.ConsoleAppender -->
+        <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>${PATTERN}</pattern>
+            </encoder>
+        </appender>
+
+        <logger name="com.junly" level="debug" />
+
+        <root level="INFO">
+            <appender-ref ref="CONSOLE" />
+        </root>
+    </springProfile>
+
+    <!-- 测试环境 -->
+    <springProfile name="test">
+    	<!-- 设置成文件滚动式输出的策略： ch.qos.logback.core.rolling.RollingFileAppender-->
+        <appender name="ROLLING"
+            class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <!-- 文件路径 -->
+            <file>E:/workspace-sts-git/baselog/base.log</file>
+            <rollingPolicy
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+                <!-- rollover daily -->
+                <fileNamePattern>E:/workspace-sts-git/baselog/base_%d{yyyy-MM-dd}.%i.log
+                </fileNamePattern>
+                <!-- each file should be at most 2MB, keep 30 days worth of history, 
+                    but at most 10MB -->
+                <maxFileSize>2MB</maxFileSize>
+                <maxHistory>30</maxHistory>
+                <totalSizeCap>10MB</totalSizeCap>
+            </rollingPolicy>
+            <!-- <layout class="ch.qos.logback.classic.PatternLayout"> <pattern>${PATTERN}</pattern> 
+                </layout> -->
+            <encoder>
+                <pattern>${PATTERN}</pattern>
+            </encoder>
+        </appender>
+
+        <root level="info">
+            <appender-ref ref="ROLLING" />
+        </root>
+    </springProfile>
+
+    <!-- 生产环境 -->
+    <springProfile name="prod">
+        <appender name="ROLLING"
+            class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <!-- 文件路径 -->
+            <file>/ftp/private/kmAppletLogs/kmapplet.log</file>
+            <rollingPolicy
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+                <!-- rollover daily -->
+                <fileNamePattern>/ftp/private/kmAppletLogs/kmapplet_%d{yyyy-MM-dd}.%i.log
+                </fileNamePattern>
+                <!-- each file should be at most 10MB, keep 30 days worth of history, 
+                    but at most 1GB -->
+                <!-- 每个日志文件最大10MB, 保留30天的日志文件, 但是最多总文件大小为 5GB -->
+                <maxFileSize>10MB</maxFileSize>
+                <maxHistory>30</maxHistory>
+                <totalSizeCap>5GB</totalSizeCap>
+            </rollingPolicy>
+            <!-- <layout class="ch.qos.logback.classic.PatternLayout"> <pattern>${PATTERN}</pattern> 
+                </layout> -->
+            <encoder>
+                <pattern>${PATTERN}</pattern>
+            </encoder>
+        </appender>
+
+        <!--这里控制日志输出级别 -->
+        <root level="DEBUG">
+            <appender-ref ref="ROLLING" />
+        </root>
+    </springProfile>
+
+</configuration>

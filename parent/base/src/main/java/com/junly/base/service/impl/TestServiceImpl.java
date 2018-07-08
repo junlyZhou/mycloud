@@ -24,7 +24,9 @@ public class TestServiceImpl implements TestService {
 	
 	@Override
 	public Map<String, Object> queryStudentInfo(String id) {
+		//调用slaver的数据源
 		Map<String, Object> schoolName = schoolMapper.getSchoolName(id);
+		//调用master的数据源
 		Map<String, Object> queryStudentInfo = studentMapper.queryStudentInfo(id);
 		logger.info(schoolName == null?"":schoolName.toString());
 		logger.info(queryStudentInfo == null?"":queryStudentInfo.toString());
