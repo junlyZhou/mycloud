@@ -18,6 +18,9 @@ base:
   Ribben:
     NFLoadBalancerRuleClassName: com.netflix.loadbalancer.WeightedResponseTimeRule
     
+
+#hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 1000
+    
 #引入打印日志输出配置采用了backlog日志记录的方式
 logging: 
   config: classpath:logback-spring.xml

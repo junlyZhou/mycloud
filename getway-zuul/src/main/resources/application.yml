@@ -1,0 +1,18 @@
+server:
+  port: 8060
+eureka:
+  instance:
+    hostname: localhost
+  client: 
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+#默认情况下：
+#zuul 注册到eureka后自动拉去服务名称(front)，那么可以通过访问zuul的服务地址：
+#http://zuul的服务地址/其他的服务名称/映射路劲 例如：http://localhost:8060/front/hystrix/1
+#那么就可以访问到服务了
+
+#给其他微服务改服务名称，避免直接暴露服务访问地址
+zuul:
+  ignoredService: '*' #这里可以忽略所有的服务（不允许从zuul网关中转发访问），除了routes中定义的服务
+  routes:
+    front: /bbbb/**  #将front服务的服务名称路劲改为 bbbb开头的地址如：http://localhost:8060/bbbb/hystrix/1

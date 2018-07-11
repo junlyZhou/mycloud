@@ -20,6 +20,7 @@ import com.jayway.jsonpath.Configuration;
 @EnableFeignClients(basePackages = "com.junly.front.service")
 @EnableAutoConfiguration
 @EnableCircuitBreaker
+@ComponentScan(basePackages="com.junly.front")
 public class FrontApplication {
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(FrontApplication.class, args);
