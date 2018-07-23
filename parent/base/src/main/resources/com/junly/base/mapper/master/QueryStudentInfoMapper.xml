@@ -8,4 +8,24 @@
 		SELECT * FROM test_student where id = #{id}
 	</select> 
 
+	<select id = "queryPrivilege" parameterType = "int" resultType="com.junly.base.vo.PrivilegeVo">
+		SELECT
+		  u.`user_name` userName,
+		  p.`privilege_flag` privilegeFlag
+		FROM
+		  tb_user u,
+		  tb_user_role ur,
+		  tb_role_privilege rp,
+		  tb_privilege p
+		WHERE u.`user_id` = ur.`user_id`
+		  AND ur.`role_id` = rp.`role_id`
+		  AND rp.`privilege_id` = p.`privilege_id`
+		  AND ur.`user_id` = #{userId}
+	</select>
+	
+	<!-- 添加用户 -->
+	<insert id="saveUser" parameterType="com.junly.base.vo.User">
+		INSERT INTO tb_user VALUES(#{userId},#{userName},#{loginName},#{password})
+	</insert>
+
 </mapper>
