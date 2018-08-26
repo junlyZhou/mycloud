@@ -23,6 +23,7 @@
 		<fastjson.version>1.2.47</fastjson.version>
 		<shiro.version>1.4.0</shiro.version>
 		<feign.version>8.18.0</feign.version>
+		<hdfs.core.version>1.2.1</hdfs.core.version>
 	</properties>
 
 	<parent>
@@ -73,7 +74,6 @@
 			<artifactId>fastjson</artifactId>
 			<version>${fastjson.version}</version>
 		</dependency>
-
 	</dependencies>
 
 

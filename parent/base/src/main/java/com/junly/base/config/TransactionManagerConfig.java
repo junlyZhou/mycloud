@@ -8,8 +8,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.annotation.Transactional;
-
+/**
+ * 实现多数据源事务管理的注册
+ * @author Administrator
+ *
+ */
 @Configuration
 public class TransactionManagerConfig {
 	
